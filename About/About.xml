@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ModMetaData>
+  <name>Stand Your Ground</name>
+  <author>Zylle</author>
+  <supportedVersions>
+	<li>1.1</li>
+	<li>1.2</li>
+   </supportedVersions>
+   <packageId>zylle.StandYourGround</packageId>
+   <modDependencies>
+    <li>
+        <packageId>brrainz.harmony</packageId>
+        <displayName>Harmony</displayName>
+        <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+        <downloadUrl>https://github.com/pardeike/HarmonyRimWorld/releases/latest</downloadUrl>
+    </li>
+</modDependencies>
+  <description>Allows setting the default response of pawns to hostile behavior; changes the intial value from flee to attack.
+  
+  Safe to add and remove
+-------------------------
+Credits:
+Original mod by Protobeard
+
+
+-------------------------
+Links:
+Discord: https://discord.gg/4EFv76C
+My other mods: https://steamcommunity.com/profiles/76561197998830956/myworkshopfiles/?appid=294100
+
+Support me: https://ko-fi.com/zylleon
+
+</description>
+</ModMetaData>

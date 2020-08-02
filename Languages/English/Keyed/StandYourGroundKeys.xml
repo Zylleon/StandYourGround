@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ZSYG_ModName>Stand Your Ground</ZSYG_ModName>
+  
+  <ZSYG_DefaultHostilityResponse>Hostility response mode (how to react to nearby enemies when not drafted)</ZSYG_DefaultHostilityResponse>
+  <ZSYG_Default>Default</ZSYG_Default>
+  <ZSYG_Pacifist>Pacifists</ZSYG_Pacifist>
+  
+  
+  <ZSYG_AreaRestriction>Restrict allowed area for new pawns</ZSYG_AreaRestriction>
+  <ZSYG_AreaRestrictionTooltip>Will restrict new pawn to the most common allowed area for your other pawns</ZSYG_AreaRestrictionTooltip>
+  
+</LanguageData>
