@@ -43,35 +43,37 @@ namespace StandYourGround
                     //pawn.playerSettings.hostilityResponse = RimWorld.HostilityResponseMode.Attack;
                 }
 
-                //if (StandYourGroundSettings.flagAreaRestriction)
-                //{
-                //    if(pawn.Map != null)
-                //    {
-                //        Log.Message("... checking area");
+                if (StandYourGroundSettings.flagAreaRestriction)
+                {
+                    if (pawn.Map != null)
+                    {
+                        Log.Message("... checking area");
 
-                //        List<Pawn> colonists = pawn.Map.mapPawns.FreeColonists;
+                        List<Pawn> colonists = pawn.Map.mapPawns.FreeColonists;
+                        if (colonists.Count > 2)
+                        {
+                            //Area area = colonists.GroupBy(c => c.playerSettings.AreaRestriction)
+                            //     .Select(y => new { Area = y.Key, Count = y.Count() }).OrderByDescending(g => g.Count).First().Area;
 
-                //        if (colonists.Count > 1)
-                //        {
-                //            Area area = colonists.Where(c => c != pawn).GroupBy(c => c.playerSettings.AreaRestriction)
-                //                 .Select(y => new { Area = y.Key, Count = y.Count() }).OrderByDescending(g => g.Count).First().Area;
+                            Area area = colonists.Where(c => c != pawn).GroupBy(c => c.playerSettings.AreaRestriction)
+                                 .Select(y => new { Area = y.Key, Count = y.Count() }).OrderByDescending(g => g.Count).First().Area;
 
-                //            if (area != null)
-                //            {
-                //                Log.Message("Found area " + area.Label);
-                //                Log.Message("Found area " + area);
+                            if (area != null)
+                            {
+                                Log.Message("Found area " + area.Label);
+                                Log.Message("Found area " + area);
 
-                //                pawn.playerSettings.AreaRestriction = area;
+                                pawn.playerSettings.AreaRestriction = area;
 
-                //                Log.Message("Pawn assigned to " + pawn.playerSettings.AreaRestriction.Label);
-                //            }
-                            
-
-                //        }
-                //    }
+                                Log.Message("Pawn assigned to " + pawn.playerSettings.AreaRestriction.Label);
+                            }
 
 
-                //}
+                        }
+                    }
+
+
+                }
 
             }
         }

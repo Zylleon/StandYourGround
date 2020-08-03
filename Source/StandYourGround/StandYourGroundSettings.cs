@@ -10,13 +10,13 @@ namespace StandYourGround
 {
     public class StandYourGroundSettings : ModSettings
     {
-        //public static bool flagAreaRestriction = true;
         public static RimWorld.HostilityResponseMode violentDefault = RimWorld.HostilityResponseMode.Attack;
         public static RimWorld.HostilityResponseMode pacifistDefault = RimWorld.HostilityResponseMode.Flee;
+        public static bool flagAreaRestriction = true;
 
         public override void ExposeData()
         {
-            //Scribe_Values.Look(ref flagAreaRestriction, "flagAreaRestriction", true);
+            Scribe_Values.Look(ref flagAreaRestriction, "flagAreaRestriction", true);
             Scribe_Values.Look(ref violentDefault, "violentDefault", RimWorld.HostilityResponseMode.Attack);
             Scribe_Values.Look(ref pacifistDefault, "pacifistDefault", RimWorld.HostilityResponseMode.Flee);
         }
