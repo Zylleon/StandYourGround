@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Verse;
 using HarmonyLib;
+using RimWorld;
 
 namespace StandYourGround
 {
@@ -31,18 +32,19 @@ namespace StandYourGround
         {
             if (pawn.RaceProps.Humanlike && !pawn.Dead && pawn.Faction?.IsPlayer == true)
             {
-                if (pawn.WorkTagIsDisabled(WorkTags.Violent))
+                if (!PawnUtility.EverBeenColonistOrTameAnimal(pawn))
                 {
-                    //pawn.playerSettings.hostilityResponse = RimWorld.HostilityResponseMode.Ignore;
-                    pawn.playerSettings.hostilityResponse = StandYourGroundSettings.pacifistDefault;
+                    if (pawn.WorkTagIsDisabled(WorkTags.Violent))
+                    {
+                        pawn.playerSettings.hostilityResponse = StandYourGroundSettings.pacifistDefault;
 
+                    }
+                    else
+                    {
+                        pawn.playerSettings.hostilityResponse = StandYourGroundSettings.violentDefault;
+                    }
                 }
-                else
-                {
-                    pawn.playerSettings.hostilityResponse = StandYourGroundSettings.violentDefault;
-                    //pawn.playerSettings.hostilityResponse = RimWorld.HostilityResponseMode.Attack;
-                }
-
+               
                 //if (StandYourGroundSettings.flagAreaRestriction)
                 //{
                 //    if (pawn.Map != null)
