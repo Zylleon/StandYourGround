@@ -38,7 +38,6 @@ namespace StandYourGround
             Listing_Standard listing = new Listing_Standard();
             listing.Begin(inRect);
 
-            //listing.CheckboxLabeled("ZSYG_AreaRestriction".Translate(), ref StandYourGroundSettings.flagAreaRestriction, "ZSYG_AreaRestrictionTooltip".Translate());
             listing.Label("ZSYG_DefaultHostilityResponse".Translate());
 
             List <RimWorld.HostilityResponseMode> responses = new List<RimWorld.HostilityResponseMode>();
