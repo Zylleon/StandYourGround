@@ -7,7 +7,7 @@
   <ZSYG_Pacifist>Pacifists</ZSYG_Pacifist>
   <ZSYG_Children>Children</ZSYG_Children>
   
-  <ZSYG_ApplyDefaults>Re-apply Defaults</ZSYG_ApplyDefaults>
+  <ZSYG_ApplyDefaults>Re-apply Settings</ZSYG_ApplyDefaults>
   <ZSYG_ApplyDefaultsDesc>Apply current settings to all existing colonists. Use if you changed settings and want everyone on the new defaults, or if you enabled this mod mid-game.</ZSYG_ApplyDefaultsDesc>
   <ZYSG_ApplyDefaultsSuccess>Applied hostility response defaults to {0} colonists.</ZYSG_ApplyDefaultsSuccess>
   
