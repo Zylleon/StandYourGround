@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Verse;
 using UnityEngine;
+using RimWorld;
+using Verse.Sound;
 
 namespace StandYourGround
 {
@@ -43,6 +45,8 @@ namespace StandYourGround
             listing.Begin(inRect);
 
             listing.Label("ZSYG_DefaultHostilityResponse".Translate());
+
+            listing.Gap();
 
             List <RimWorld.HostilityResponseMode> responses = new List<RimWorld.HostilityResponseMode>();
             responses.Add(RimWorld.HostilityResponseMode.Attack);
@@ -86,6 +90,42 @@ namespace StandYourGround
                 }
                 Find.WindowStack.Add(new FloatMenu(responseList));
 
+            }
+
+
+            listing.GapLine();
+            listing.Gap();
+
+            listing.Label("ZSYG_ApplyDefaultsDesc".Translate());
+
+            listing.Gap();
+            if (listing.ButtonText("ZSYG_ApplyDefaults".Translate(), RimWorld.HostilityResponseModeUtility.GetLabel(StandYourGroundSettings.childDefault)))
+            {
+                SoundDefOf.Click.PlayOneShotOnCamera(null);
+                int numApplied = 0;
+                foreach (Pawn pawn in PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists)
+                {
+                    if (pawn.RaceProps.Humanlike && !pawn.Dead && pawn.Faction?.IsPlayer == true)
+                    {
+                        if (pawn.ageTracker.CurLifeStage.developmentalStage.Juvenile())
+                        {
+                            pawn.playerSettings.hostilityResponse = StandYourGroundSettings.childDefault;
+                        }
+                        else if (pawn.WorkTagIsDisabled(WorkTags.Violent))
+                        {
+                            pawn.playerSettings.hostilityResponse = StandYourGroundSettings.pacifistDefault;
+
+                        }
+                        else
+                        {
+                            pawn.playerSettings.hostilityResponse = StandYourGroundSettings.violentDefault;
+                        }
+                        numApplied++;
+                    }
+
+                }
+
+                Messages.Message(string.Format("ZYSG_ApplyDefaultsSuccess".Translate(), numApplied), MessageTypeDefOf.TaskCompletion, false);
             }
 
             listing.End();
