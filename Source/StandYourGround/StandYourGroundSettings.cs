@@ -12,6 +12,9 @@ namespace StandYourGround
     {
         public static RimWorld.HostilityResponseMode violentDefault = RimWorld.HostilityResponseMode.Attack;
         public static RimWorld.HostilityResponseMode pacifistDefault = RimWorld.HostilityResponseMode.Flee;
+
+        public static RimWorld.HostilityResponseMode childDefault = RimWorld.HostilityResponseMode.Flee;
+
         public static bool flagAreaRestriction = true;
 
         public override void ExposeData()
@@ -19,6 +22,7 @@ namespace StandYourGround
             Scribe_Values.Look(ref flagAreaRestriction, "flagAreaRestriction", true);
             Scribe_Values.Look(ref violentDefault, "violentDefault", RimWorld.HostilityResponseMode.Attack);
             Scribe_Values.Look(ref pacifistDefault, "pacifistDefault", RimWorld.HostilityResponseMode.Flee);
+            Scribe_Values.Look(ref childDefault, "childDefault", RimWorld.HostilityResponseMode.Flee);
         }
     }
 
@@ -71,6 +75,19 @@ namespace StandYourGround
                 Find.WindowStack.Add(new FloatMenu(responseList));
 
             }
+
+
+            if (listing.ButtonTextLabeled("ZSYG_Children".Translate(), RimWorld.HostilityResponseModeUtility.GetLabel(StandYourGroundSettings.childDefault)))
+            {
+                List<FloatMenuOption> responseList = new List<FloatMenuOption>();
+                foreach (RimWorld.HostilityResponseMode h in responses)
+                {
+                    responseList.Add(new FloatMenuOption(RimWorld.HostilityResponseModeUtility.GetLabel(h), delegate { StandYourGroundSettings.childDefault = h; }));
+                }
+                Find.WindowStack.Add(new FloatMenu(responseList));
+
+            }
+
             listing.End();
         }
 

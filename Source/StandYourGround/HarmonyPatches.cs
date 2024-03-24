@@ -34,6 +34,10 @@ namespace StandYourGround
             {
                 if (!PawnUtility.EverBeenColonistOrTameAnimal(pawn))
                 {
+                    if(pawn.ageTracker.CurLifeStage == LifeStageDefOf.HumanlikeChild)
+                    {
+                        pawn.playerSettings.hostilityResponse = StandYourGroundSettings.childDefault;
+                    }
                     if (pawn.WorkTagIsDisabled(WorkTags.Violent))
                     {
                         pawn.playerSettings.hostilityResponse = StandYourGroundSettings.pacifistDefault;
@@ -44,41 +48,58 @@ namespace StandYourGround
                         pawn.playerSettings.hostilityResponse = StandYourGroundSettings.violentDefault;
                     }
                 }
-               
-                //if (StandYourGroundSettings.flagAreaRestriction)
-                //{
-                //    if (pawn.Map != null)
-                //    {
-                //        Log.Message("... checking area");
-
-                //        List<Pawn> colonists = pawn.Map.mapPawns.FreeColonists;
-                //        if (colonists.Count > 2)
-                //        {
-                //            //Area area = colonists.GroupBy(c => c.playerSettings.AreaRestriction)
-                //            //     .Select(y => new { Area = y.Key, Count = y.Count() }).OrderByDescending(g => g.Count).First().Area;
-
-                //            Area area = colonists.Where(c => c != pawn).GroupBy(c => c.playerSettings.AreaRestriction)
-                //                 .Select(y => new { Area = y.Key, Count = y.Count() }).OrderByDescending(g => g.Count).First().Area;
-
-                //            if (area != null)
-                //            {
-                //                Log.Message("Found area " + area.Label);
-                //                Log.Message("Found area " + area);
-
-                //                pawn.playerSettings.AreaRestriction = area;
-
-                //                Log.Message("Pawn assigned to " + pawn.playerSettings.AreaRestriction.Label);
-                //            }
-
-
-                //        }
-                //    }
-
-
-                //}
 
             }
         }
     }
+
+
+    [HarmonyPatch(typeof(RimWorld.LifeStageWorker_HumanlikeAdult), "Notify_LifeStageStarted")]
+    internal static class AdultResponsePatch
+    {
+        static void Postfix(Pawn pawn, LifeStageDef previousLifeStage)
+        {
+            if (PawnUtility.EverBeenColonistOrTameAnimal(pawn))
+            {
+                if (previousLifeStage != null)
+                {
+                    if (previousLifeStage?.developmentalStage.Juvenile() == true)
+                    {
+                        if (pawn.WorkTagIsDisabled(WorkTags.Violent))
+                        {
+                            pawn.playerSettings.hostilityResponse = StandYourGroundSettings.pacifistDefault;
+
+                        }
+                        else
+                        {
+                            pawn.playerSettings.hostilityResponse = StandYourGroundSettings.violentDefault;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+
+    [HarmonyPatch(typeof(RimWorld.LifeStageWorker_HumanlikeChild), "Notify_LifeStageStarted")]
+    internal static class ChildResponsePatch
+    {
+        static void Postfix(Pawn pawn, LifeStageDef previousLifeStage)
+        {
+            if (previousLifeStage != null && previousLifeStage.developmentalStage.Baby())
+            {
+                if (pawn.WorkTagIsDisabled(WorkTags.Violent))
+                {
+                    pawn.playerSettings.hostilityResponse = StandYourGroundSettings.pacifistDefault;
+                }
+                else
+                {
+                    pawn.playerSettings.hostilityResponse = StandYourGroundSettings.childDefault;
+                }
+            }
+        }
+    }
+
 
 }

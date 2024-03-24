@@ -5,6 +5,7 @@
   <ZSYG_DefaultHostilityResponse>Hostility response mode (how to react to nearby enemies when not drafted)</ZSYG_DefaultHostilityResponse>
   <ZSYG_Default>Default</ZSYG_Default>
   <ZSYG_Pacifist>Pacifists</ZSYG_Pacifist>
+  <ZSYG_Children>Children</ZSYG_Children>
   
   
   <ZSYG_AreaRestriction>Restrict allowed area for new pawns</ZSYG_AreaRestriction>
