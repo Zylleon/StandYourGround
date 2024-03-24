@@ -24,7 +24,7 @@ namespace StandYourGround
         }
     }
 
-
+    // new pawn joining the colony
     [HarmonyPatch(typeof(RimWorld.PawnComponentsUtility), "AddAndRemoveDynamicComponents")]
     internal static class HostilityResponsePatch
     {
@@ -34,11 +34,11 @@ namespace StandYourGround
             {
                 if (!PawnUtility.EverBeenColonistOrTameAnimal(pawn))
                 {
-                    if(pawn.ageTracker.CurLifeStage == LifeStageDefOf.HumanlikeChild)
+                    if(pawn.ageTracker.CurLifeStage.developmentalStage.Juvenile())
                     {
                         pawn.playerSettings.hostilityResponse = StandYourGroundSettings.childDefault;
                     }
-                    if (pawn.WorkTagIsDisabled(WorkTags.Violent))
+                    else if (pawn.WorkTagIsDisabled(WorkTags.Violent))
                     {
                         pawn.playerSettings.hostilityResponse = StandYourGroundSettings.pacifistDefault;
 
@@ -53,7 +53,7 @@ namespace StandYourGround
         }
     }
 
-
+    // children aging to adulthood
     [HarmonyPatch(typeof(RimWorld.LifeStageWorker_HumanlikeAdult), "Notify_LifeStageStarted")]
     internal static class AdultResponsePatch
     {
@@ -81,21 +81,24 @@ namespace StandYourGround
     }
 
 
-
+    // babies aging to children
     [HarmonyPatch(typeof(RimWorld.LifeStageWorker_HumanlikeChild), "Notify_LifeStageStarted")]
     internal static class ChildResponsePatch
     {
         static void Postfix(Pawn pawn, LifeStageDef previousLifeStage)
         {
-            if (previousLifeStage != null && previousLifeStage.developmentalStage.Baby())
+            if (PawnUtility.EverBeenColonistOrTameAnimal(pawn))
             {
-                if (pawn.WorkTagIsDisabled(WorkTags.Violent))
+                if (previousLifeStage != null && previousLifeStage.developmentalStage.Baby())
                 {
-                    pawn.playerSettings.hostilityResponse = StandYourGroundSettings.pacifistDefault;
-                }
-                else
-                {
-                    pawn.playerSettings.hostilityResponse = StandYourGroundSettings.childDefault;
+                    if (pawn.WorkTagIsDisabled(WorkTags.Violent))
+                    {
+                        pawn.playerSettings.hostilityResponse = StandYourGroundSettings.pacifistDefault;
+                    }
+                    else
+                    {
+                        pawn.playerSettings.hostilityResponse = StandYourGroundSettings.childDefault;
+                    }
                 }
             }
         }
