@@ -103,7 +103,7 @@ namespace StandYourGround
             {
                 SoundDefOf.Click.PlayOneShotOnCamera(null);
                 int numApplied = 0;
-                foreach (Pawn pawn in PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists)
+                foreach (Pawn pawn in PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive_FreeColonists)
                 {
                     if (pawn.RaceProps.Humanlike && !pawn.Dead && pawn.Faction?.IsPlayer == true)
                     {
